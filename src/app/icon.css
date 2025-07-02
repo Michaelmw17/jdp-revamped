@@ -1,0 +1,35 @@
+
+.icon {
+  color: var(--primary);
+  transition: color 0.2s, filter 0.2s;
+  z-index: 1;
+}
+
+.menu-icon-hover {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.menu-hover-parent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.menu-hover-parent::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 8px;
+  background: rgba(209, 29, 50, 0.12);
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 0;
+}
+.menu-hover-parent:hover::before,
+.menu-hover-parent:focus-visible::before {
+  opacity: 1;
+}

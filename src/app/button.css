@@ -1,0 +1,15 @@
+.button {
+  background: transparent;
+  color: #171717;
+  border: 2px solid var(--primary);
+  outline: none;
+  transition: background 0.2s, color 0.2s;
+}
+.button:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.button:hover .icon {
+  color: #fff;
+}

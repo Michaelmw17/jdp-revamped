@@ -1,0 +1,8 @@
+@media (min-width: 992px) {
+  .my-desktop-class {
+    display: flex;
+  }
+  .my-mobile-class {
+    display: none;
+  }
+}

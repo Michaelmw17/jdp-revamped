@@ -1,0 +1,219 @@
+"use client";
+
+import React from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import emailjs from "@emailjs/browser";
+import { motion } from 'framer-motion';
+
+type FormData = {
+  firstName: string;
+  email: string;
+  number: string;
+  suburb: string;
+  menu: string;
+  subject: string;
+  message: string;
+};
+
+export default function ContactForm() {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>();
+  const [disabled, setDisabled] = useState(false);
+
+  const onSubmit = async (data: FormData) => {
+    const { firstName, email, subject, message, menu, suburb, number } = data;
+    try {
+      setDisabled(true);
+      const templateParams = {
+        firstName,
+        email,
+        subject,
+        message,
+        menu,
+        suburb,
+        number,
+      };
+      await emailjs.send(
+        'service_a9ktqlp',
+        'template_l0mglga',
+        templateParams,
+        'user_yw3a8DYtaKOIm8KcBtk2L'
+      );
+      reset();
+      setDisabled(false);
+      // Optionally, show a simple alert or message here
+      alert("Form sent! Thank you for your enquiry.");
+    } catch (e) {
+      setDisabled(false);
+      alert("There was an error sending the form.");
+      console.log(e);
+    }
+  };
+
+  return (
+    <section className="w-full max-w-5xl mx-auto p-6 rounded-xl mt-8 scroll-mt-22" id="contact">
+      <div className="flex flex-col md:flex-row gap-8">
+        {/* Left: Contact Form */}
+        <div className="md:w-1/2 w-full">
+          <h3 className="text-3xl font-bold mb-4 text-center md:text-left">Contact Us</h3>
+          <form onSubmit={handleSubmit(onSubmit)} autoComplete="off" noValidate>
+            <div className="mb-4">
+              <input
+                {...register("firstName", { required: true })}
+                type="text"
+                id="firstName"
+                placeholder="Name *"
+                className="w-full border rounded px-3 py-2"
+                disabled={disabled}
+              />
+              {errors.firstName && <span className="text-red-600 text-sm">Name is required</span>}
+            </div>
+            <div className="mb-4">
+              <input
+                {...register("email", { required: true })}
+                type="email"
+                id="inputEmail"
+                placeholder="Email *"
+                className="w-full border rounded px-3 py-2"
+                disabled={disabled}
+              />
+              {errors.email && <span className="text-red-600 text-sm">Email is required</span>}
+            </div>
+            <div className="mb-4">
+              <input
+                {...register("number", { required: true })}
+                type="text"
+                id="number"
+                placeholder="Phone Number *"
+                className="w-full border rounded px-3 py-2"
+                disabled={disabled}
+              />
+              {errors.number && <span className="text-red-600 text-sm">Phone number is required</span>}
+            </div>
+            <div className="mb-4">
+              <input
+                {...register("suburb", { required: true })}
+                type="text"
+                id="suburb"
+                placeholder="Suburb Name *"
+                className="w-full border rounded px-3 py-2"
+                disabled={disabled}
+              />
+              {errors.suburb && <span className="text-red-600 text-sm">Suburb is required</span>}
+            </div>
+            <div className="mb-4 flex flex-col md:flex-row gap-4">
+              <label htmlFor="menu" className="sr-only">What can we help you with?</label>
+              <select
+                {...register("menu", { required: true })}
+                id="menu"
+                className="w-full border rounded px-3 py-2"
+                disabled={disabled}
+                title="What can we help you with?"
+                aria-label="What can we help you with?"
+              >
+                <option value="" disabled hidden>What can we help you with? *</option>
+                <option value="Residential">Residential</option>
+                <option value="Strata / Property Maintenance">Strata / Property Maintenance</option>
+                <option value="Commercial">Commercial</option>
+                <option value="Other">Other</option>
+              </select>
+              {errors.menu && <span className="text-red-600 text-sm">Please select an option</span>}
+              <input
+                {...register("subject", { required: true })}
+                type="text"
+                id="subject"
+                placeholder="Subject *"
+                className="w-full border rounded px-3 py-2"
+                disabled={disabled}
+              />
+              {errors.subject && <span className="text-red-600 text-sm">Subject is required</span>}
+            </div>
+            <div className="mb-4">
+              <textarea
+                {...register("message", { required: true })}
+                rows={3}
+                placeholder="Message *"
+                className="w-full border rounded px-3 py-2"
+                disabled={disabled}
+              />
+              {errors.message && <span className="text-red-600 text-sm">Message is required</span>}
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-red-600 text-white font-semibold py-3 rounded-full shadow-sm transition-all duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 hover:bg-white hover:text-black hover:outline hover:outline-2 hover:outline-[var(--primary)]"
+              disabled={disabled}
+            >
+              {disabled ? "Sending..." : "Send Message"}
+            </button>
+          </form>
+        </div>
+        {/* Right: Contact Info and Map */}
+        <div className="md:w-1/2 w-full flex flex-col items-center justify-center gap-6">
+          <div className="text-center md:text-left">
+            <div className="mb-2">
+              <a href="tel:02-9419-7947" className="blue-link text-lg font-semibold">Ph: (02) 9419 7947</a>
+            </div>
+            <div className="mb-2">
+              <a href="https://goo.gl/maps/hrBNba4G8a1EbgFg6" className="blue-link text-lg font-semibold">
+                Unit 17, 4-6 Chaplin Drive Lane Cove West NSW 2066
+              </a>
+            </div>
+          </div>
+          <div className="w-full flex justify-center items-center">
+            <AnimatedMapReveal />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Animated map reveal for contact section
+function AnimatedMapReveal() {
+  const [isMobile, setIsMobile] = React.useState(false);
+  React.useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth < 640);
+    }
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return (
+    <motion.div
+      initial={isMobile ? { opacity: 0, y: 60 } : { opacity: 0, x: 80 }}
+      whileInView={{ opacity: 1, x: 0, y: 0 }}
+      viewport={{ once: true, amount: 0.6 }}
+      transition={{ duration: 0.9, ease: 'easeOut' }}
+      className="w-full max-w-md md:max-w-full h-72 md:h-64 rounded-lg overflow-hidden relative group"
+    >
+      <iframe
+        title="JDP Electrical Map"
+        width="100%"
+        height="100%"
+        style={{ border: 0 }}
+        loading="lazy"
+        allowFullScreen
+        referrerPolicy="no-referrer-when-downgrade"
+        src="https://www.openstreetmap.org/export/embed.html?bbox=151.1425%2C-33.8185%2C151.1645%2C-33.8055&amp;layer=mapnik&amp;marker=-33.8120%2C151.1535"
+      ></iframe>
+      <a
+        href="https://goo.gl/maps/hrBNba4G8a1EbgFg6"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Open location in Google Maps"
+        className="absolute inset-0 flex items-center justify-center bg-transparent cursor-pointer z-10"
+        tabIndex={0}
+        style={{ outline: 'none' }}
+      >
+        <span className="sr-only">Open location in Google Maps</span>
+      </a>
+    </motion.div>
+  );
+}

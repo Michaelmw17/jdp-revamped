@@ -1,0 +1,24 @@
+/* Custom red box shadow for flipping cards */
+.custom-red-shadow {
+  box-shadow: 0 7px 8px var(--primary);
+}
+/* Flipping card effect for Tailwind/Next.js */
+
+.group[perspective] {
+  perspective: 1000px;
+}
+
+/* Ensure smooth 3D flip */
+.group .preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* Hide scrollbars on card back for aesthetics */
+.group .card-back::-webkit-scrollbar {
+  display: none;
+}
+
+.group .card-back {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
