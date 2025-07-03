@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Hamburger from "../component/Hambuger";
+import Hamburger from "../component/Hamburger";
 import BackToTopButton from "../component/BackToTopButton";
 import "../styles/globals.css";
 

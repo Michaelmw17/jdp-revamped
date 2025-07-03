@@ -29,7 +29,7 @@ export default function HomeHero() {
             North Shore&apos;s Trusted Electricians
           </h1>
           <p className="text-white text-lg md:text-2xl font-medium mb-0 md:mb-2 drop-shadow-lg text-center" style={{marginTop: 0}}>
-            Family-owned and operated for over 60 years. Fast, safe and professional electrical solutions for your home or business.
+            Family-owned and operated. JDP Electrical has been providing electrical services throughout Sydney, North Shore Region and surrounding areas for over 30 years. Fast, safe, and professional electrical solutions for your home or business.
           </p>
           <div className="flex flex-col sm:flex-row gap-2 w-full max-w-[260px] sm:max-w-[420px] justify-center items-center mt-1">
             <a
