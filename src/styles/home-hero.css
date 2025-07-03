@@ -1,9 +1,8 @@
 /* Responsive object-position for hero background image */
 .home-hero-img-bg {
   object-fit: cover;
-  object-position: 62% 5%; /* Good horizontal position, moved up for mobile */
+  object-position: 62% 12%;
   transform: none;
-  transform: translateY(-2%)
 }
 
 .home-hero-img {
@@ -19,18 +18,19 @@
   border: 1.5px solid rgba(255,255,255,0.20);
   border-radius: 32px;
   box-shadow: 0 8px 32px 0 rgba(0,0,0,0.25);
-  padding: 2.5rem 2rem 2.5rem 2rem;
+  padding: 1.2rem 1rem 1.2rem 1rem;
   width: 100%;
   max-width: 1100px;
   align-items: center;
   justify-content: center;
   transition: box-shadow 0.2s;
-  gap: 2rem;
+  gap: 0rem;
 }
 @media (min-width: 768px) {
   .home-hero-img-bg {
     object-position: center 45%; /* Default for sm and up */
     transform: none;
+    transform: translateY(10%);
   }
 }
 @media (min-width: 1024px) {
@@ -39,9 +39,9 @@
     margin-right: auto;
     margin-bottom: 0;
     max-width: 1100px;
-    min-height: 340px;
-    padding: 2rem 3.5rem 3rem 3.5rem;
-    gap: 2rem;
+    min-height: 220px;
+    padding: 1.5rem 2rem 2rem 2rem;
+    gap: 1.2rem;
   }
 }
 
