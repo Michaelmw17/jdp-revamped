@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import "./globals.css";
 import Hamburger from "../component/Hambuger";
 import BackToTopButton from "../component/BackToTopButton";
+import "../styles/globals.css";
 
 export const metadata: Metadata = {
   title: "JDP Electrical Services Pty Ltd",

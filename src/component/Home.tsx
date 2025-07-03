@@ -1,12 +1,9 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
 "use client";
 import React from 'react';
 import ElectricalServicesIcon from '@mui/icons-material/ElectricalServices';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
-import './home-hero.css';
+import '../styles/home-hero.css';
 
 // Enable smooth scrolling for anchor links
 if (typeof window !== 'undefined') {
@@ -15,88 +12,52 @@ if (typeof window !== 'undefined') {
   }
 }
 
-// Animated image reveal for hero section
-function AnimatedHeroImage() {
-  // Detect screen size for animation direction
-  const [isMobile, setIsMobile] = React.useState(false);
-  React.useEffect(() => {
-    function handleResize() {
-      setIsMobile(window.innerWidth < 640);
-    }
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  return (
-    <motion.div
-      initial={isMobile ? { opacity: 0, y: 60 } : { opacity: 0, x: 80 }}
-      whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: true, amount: 0.6 }}
-      transition={{ duration: 0.9, ease: 'easeOut' }}
-    >
-      <Image
-        src="/images/light3.jpg"
-        alt="Lighting JDP Electrical Services"
-        width={500}
-        height={400}
-        className="w-full max-w-md rounded-lg shadow-lg object-cover home-hero-img"
-        priority
-      />
-    </motion.div>
-  );
-}
-
 export default function HomeHero() {
   return (
-    <section id="home" className="w-full pt-8 pb-2 md:py-12 bg-white mt-16 scroll-mt-22">
-      <div className="flex flex-col md:flex-row items-center max-w-6xl mx-auto px-4 gap-8">
-        {/* Left: Text */}
-        <div className="flex-1 flex flex-col items-center lg:items-start justify-center text-center  px-4 sm:px-[7.5rem] md:px-[1.5rem] lg:px-[1.5rem]">
-          <h3 className="text-2xl md:text-3xl lg:text-4xl xl:text-4xl font-bold mb-4 lg:text-center lg:px-12">
-            Welcome to
-            <span className="block lg:text-left whitespace-nowrap"> JDP Electrical Services</span>
-          </h3>
-          <p className="mb-2 text-lg lg:text-xl text-black-700">
-            &#39;North Shore&rsquo;s most trusted and experienced family electrical contractors, with over 60 years combined experience.&#39;
+    <section id="home" className="relative w-full min-h-[50vh] md:min-h-[650px] md:h-[90vh] flex items-stretch justify-center overflow-hidden">
+      <Image
+        src="/images/IMG_1050.jpg"
+        alt="Joe and Dominic"
+        fill
+        className="absolute inset-0 w-full h-full z-0 home-hero-img-bg"
+        priority
+        sizes="100vw"
+      />
+      <div className="relative z-10 flex flex-col items-center justify-end h-full w-full max-w-6xl mx-auto px-2 py-6 pt-30 md:pt-10">
+        <div className="home-hero-box flex flex-col items-center justify-center" style={{ marginTop: '10vh' }}>
+          <h1 className="text-white text-3xl md:text-5xl lg:text-6xl font-bold mb-1 md:mb-3 drop-shadow-lg text-center">
+            North Shore&apos;s Trusted Electricians
+          </h1>
+          <p className="text-white text-lg md:text-2xl font-medium mb-0 md:mb-2 drop-shadow-lg text-center" style={{marginTop: 0}}>
+            Family-owned and operated for over 60 years. Fast, safe and professional electrical solutions for your home or business.
           </p>
-          <p className="mb-6 text-lg lg:text-xl text-black-700">
-            JDP Electrical Services offer a complete range of electrical installations and services throughout Sydney, North Shore Region and surrounding areas.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-2 md:gap-10 items-center sm:items-start justify-center sm:justify-start lg:items-center lg:justify-center mx-auto">
+          <div className="flex flex-col sm:flex-row gap-2 w-full max-w-[260px] sm:max-w-[420px] justify-center items-center mt-1">
             <a
               href="#services"
-              className="button flex items-center justify-center gap-2 font-semibold text-[14px] w-full max-w-[180px] rounded-lg h-[50px] px-6 cursor-pointer bg-[var(--primary)] text-white hover:bg-red-700 transition-colors text-center no-underline focus:outline-black focus:outline-2 focus:outline"
+              className="button flex items-center justify-center gap-1 font-semibold text-[12px] md:text-[14px] lg:text-[18px] w-full max-w-[200px] rounded-lg h-[34px] md:h-[44px] px-2 md:px-4 cursor-pointer text-white hover:bg-[var(--primary)] hover:text-white transition-colors text-center no-underline focus:outline-black focus:outline-2 focus:outline shadow-lg border-2 border-white hover:border-[var(--primary)]"
               tabIndex={0}
+              // outline handled in CSS
             >
-              <span className="flex items-center justify-center w-full gap-2">
-                <span className="m-0 p-0 font-semibold text-[16px] md:text-[18px] flex-1 text-center whitespace-nowrap">Services</span>
-                <ElectricalServicesIcon className="icon text-xl transition-colors" />
+              <span className="flex items-center justify-center gap-1 w-full">
+                <span className="m-0 p-0 font-semibold text-center whitespace-nowrap">Services</span>
+                <ElectricalServicesIcon className="icon text-base md:text-xl transition-colors" />
               </span>
             </a>
             <a
               href="#contact"
-              className="button flex items-center justify-center gap-2 font-semibold text-[14px] w-full max-w-[180px] rounded-lg h-[50px] px-6 cursor-pointer bg-gray-800 text-white hover:bg-gray-900 transition-colors text-center no-underline focus:outline-black focus:outline-2 focus:outline"
+              className="button flex items-center justify-center gap-1 font-semibold text-[12px] md:text-[14px] lg:text-[18px] w-full max-w-[200px] rounded-lg h-[34px] md:h-[44px] px-2 md:px-4 cursor-pointer text-white hover:bg-[var(--primary)] hover:text-white transition-colors text-center no-underline focus:outline-black focus:outline-2 focus:outline shadow-lg border-2 border-white hover:border-[var(--primary)]"
               tabIndex={0}
+              // outline handled in CSS
             >
-              <span className="flex items-center justify-center w-full gap-2">
-                <span className="m-0 p-0 font-semibold text-[16px] md:text-[18px] flex-1 text-center">Contact</span>
-                <SupportAgentIcon className="icon text-xl transition-colors pb-[2px]" />
+              <span className="flex items-center justify-center gap-1 w-full">
+                <span className="m-0 p-0 font-semibold text-center whitespace-nowrap">Request a Quote</span>
+                <SupportAgentIcon className="icon text-base md:text-xl transition-colors pb-[2px]" />
               </span>
             </a>
           </div>
         </div>
-        {/* Right: Image */}
-        <div className="flex-1 flex items-center justify-center">
-          {/* Animate image: slide in from right on desktop/tablet, from bottom on mobile */}
-          <div
-            className="w-full max-w-md"
-            style={{ position: 'relative' }}
-          >
-            <AnimatedHeroImage />
-          </div>
-        </div>
       </div>
+      <div className="absolute inset-0 z-0" />
     </section>
   );
 }

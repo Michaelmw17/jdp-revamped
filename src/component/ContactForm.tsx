@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
 "use client";
 
 import React from "react";
@@ -18,13 +16,13 @@ type FormData = {
   message: string;
 };
 
-export default function ContactForm() {
+export default function RequestAQuote() {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({ defaultValues: { menu: "" } });
   const [disabled, setDisabled] = useState(false);
 
   const onSubmit = async (data: FormData) => {
@@ -60,9 +58,9 @@ export default function ContactForm() {
   return (
     <section className="w-full max-w-5xl mx-auto p-6 rounded-xl mt-8 scroll-mt-22" id="contact">
       <div className="flex flex-col md:flex-row gap-8">
-        {/* Left: Contact Form */}
+        {/* Left: Request a Quote Form */}
         <div className="md:w-1/2 w-full">
-          <h3 className="text-3xl font-bold mb-4 text-center md:text-left">Contact Us</h3>
+          <h3 className="text-3xl font-bold mb-4 text-center md:text-left">Request a Quote</h3>
           <form onSubmit={handleSubmit(onSubmit)} autoComplete="off" noValidate>
             <div className="mb-4">
               <input
@@ -110,20 +108,28 @@ export default function ContactForm() {
             </div>
             <div className="mb-4 flex flex-col md:flex-row gap-4">
               <label htmlFor="menu" className="sr-only">What can we help you with?</label>
-              <select
-                {...register("menu", { required: true })}
-                id="menu"
-                className="w-full border rounded px-3 py-2"
-                disabled={disabled}
-                title="What can we help you with?"
-                aria-label="What can we help you with?"
-              >
-                <option value="" disabled hidden>What can we help you with? *</option>
-                <option value="Residential">Residential</option>
-                <option value="Strata / Property Maintenance">Strata / Property Maintenance</option>
-                <option value="Commercial">Commercial</option>
-                <option value="Other">Other</option>
-              </select>
+              <div className="relative w-full">
+                <select
+                  {...register("menu", { required: true })}
+                  id="menu"
+                  className="w-full border rounded px-4 py-2 pr-10 appearance-none focus:ring-2 focus:ring-red-400 focus:border-red-400 transition-all"
+                  disabled={disabled}
+                  title="What can we help you with?"
+                  aria-label="What can we help you with?"
+                >
+                  <option value="" disabled>Please select...</option>
+                  <option value="Residential">Residential</option>
+                  <option value="Strata / Property Maintenance">Strata / Property Maintenance</option>
+                  <option value="Commercial">Commercial</option>
+                  <option value="Other">Other</option>
+                </select>
+                {/* Custom dropdown arrow */}
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500">
+                  <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.584l3.71-3.354a.75.75 0 111.02 1.1l-4.25 3.84a.75.75 0 01-1.02 0l-4.25-3.84a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                  </svg>
+                </div>
+              </div>
               {errors.menu && <span className="text-red-600 text-sm">Please select an option</span>}
               <input
                 {...register("subject", { required: true })}
@@ -154,7 +160,7 @@ export default function ContactForm() {
             </button>
           </form>
         </div>
-        {/* Right: Contact Info and Map */}
+        {/* Right: Request a Quote Info and Map */}
         <div className="md:w-1/2 w-full flex flex-col items-center justify-center gap-6">
           <div className="text-center md:text-left">
             <div className="mb-2">
@@ -175,7 +181,7 @@ export default function ContactForm() {
   );
 }
 
-// Animated map reveal for contact section
+// Animated map reveal for Request a Quote section
 function AnimatedMapReveal() {
   const [isMobile, setIsMobile] = React.useState(false);
   React.useEffect(() => {
@@ -193,13 +199,14 @@ function AnimatedMapReveal() {
       whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={{ once: true, amount: 0.6 }}
       transition={{ duration: 0.9, ease: 'easeOut' }}
-      className="w-full max-w-md md:max-w-full h-72 md:h-64 rounded-lg overflow-hidden relative group"
+      className="w-full aspect-square md:aspect-[4/3] max-w-full rounded-lg overflow-hidden relative group"
+      style={{ minHeight: '300px', height: '100%' }}
     >
       <iframe
         title="JDP Electrical Map"
         width="100%"
         height="100%"
-        style={{ border: 0 }}
+        style={{ border: 0, position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
         loading="lazy"
         allowFullScreen
         referrerPolicy="no-referrer-when-downgrade"

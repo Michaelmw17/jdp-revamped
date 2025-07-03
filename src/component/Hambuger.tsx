@@ -14,22 +14,22 @@ const menuItems = [
   { icon: <ElectricalServicesIcon />, label: "Services", anchor: "services" },
   { icon: <InfoOutlinedIcon />, label: "About", anchor: "about" },
   { icon: <StarBorderIcon />, label: "Reviews", anchor: "reviews" },
-  { icon: <SupportAgentIcon />, label: "Contact", anchor: "contact" },
+  { icon: <SupportAgentIcon />, label: "Quote", anchor: "contact" },
 ];
 
 const callButton = (
-  <a href="tel:02-9419-7947" className="flex justify-center w-full">
-    <button
-      type="button"
-      className="button flex items-center justify-center gap-2 font-semibold text-[14px] w-full max-w-[180px] rounded-lg h-[40px] cursor-pointer"
-      style={{ right: 0, padding: '0 10px' }}
-    >
-      <span className="flex items-center justify-center w-full gap-2">
-        <span className="m-0 p-0 font-semibold text-[14px] flex-1 text-center">Call Our Office</span>
-        <PhoneInTalkIcon className="icon text-xl transition-colors" />
-      </span>
-    </button>
-  </a>
+  <button
+    type="button"
+    className="button flex items-center justify-center gap-2 font-semibold text-[14px] w-full max-w-[180px] rounded-lg h-[40px] cursor-pointer"
+    style={{ right: 0, padding: '0 10px' }}
+    onClick={() => { window.location.href = 'tel:02-9419-7947'; }}
+    aria-label="Call our office at 02 9419 7947"
+  >
+    <span className="flex items-center justify-center w-full gap-2">
+      <span className="m-0 p-0 font-semibold text-[14px] flex-1 text-center">02 9419 7947</span>
+      <PhoneInTalkIcon className="icon text-xl transition-colors" />
+    </span>
+  </button>
 );
 
 export default function Hamburger() {
@@ -101,55 +101,57 @@ export default function Hamburger() {
           <button
             type="button"
             tabIndex={0}
-            className="icon text-2xl w-12 h-12 flex items-center justify-center rounded-lg border-2 border-[var(--primary)] bg-white text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white transition-colors focus:outline-black focus:outline-2 focus-visible:outline-black focus-visible:outline-2 ml-2 p-0"
+            className="icon text-2xl w-12 h-12 flex items-center justify-center rounded-lg border-2 border-[var(--primary)] relative group ml-2 p-0 transition-colors duration-200 bg-white text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white focus:bg-[var(--primary)] focus:text-white active:bg-[var(--primary)] active:text-white focus:outline-black focus:outline-2 focus-visible:outline-black focus-visible:outline-2"
             aria-label="Call us now"
             onClick={() => { window.location.href = 'tel:02-9419-7947'; }}
             style={{ outlineOffset: 2 }}
           >
-            <PhoneInTalkIcon fontSize="inherit" className="transition-colors" />
+            <PhoneInTalkIcon fontSize="inherit" className="transition-colors group-hover:text-white group-focus:text-white group-active:text-white" />
           </button>
           <button
             tabIndex={0}
-            className="icon text-2xl w-12 h-12 flex items-center justify-center rounded-lg border-2 border-[var(--primary)] bg-white text-[var(--primary)] focus:outline-black focus:outline-2 focus-visible:outline-black focus-visible:outline-2 relative group ml-2 p-0"
-            aria-label="Toggle menu"
-            aria-haspopup="true"
-            aria-expanded={open}
-            aria-controls="mobile-menu-list"
-            onClick={() => setOpen((v) => !v)}
-            onKeyDown={e => {
-              if ((e.key === 'Enter' || e.key === ' ')) {
-                e.preventDefault();
-                setOpen((prev) => {
-                  const willOpen = !prev;
-                  if (willOpen) {
-                    setTimeout(() => {
-                      const firstMenu = document.querySelector('#mobile-menu-list [tabindex="0"]');
-                      if (firstMenu && 'focus' in firstMenu && typeof (firstMenu as HTMLElement).focus === 'function') {
-                        (firstMenu as HTMLElement).focus();
-                      }
-                    }, 0);
-                  }
-                  return willOpen;
-                });
-              }
-            }}
-            style={{ outlineOffset: 2 }}
-          >
-            {/* Hamburger icon with animated lines */}
-            <span className="sr-only">Menu</span>
-            <span
-              className={`hamburger-line absolute left-1/2 -translate-x-1/2 w-6 h-0.5 bg-[var(--primary)] rounded transition-all duration-300 ease-in-out
+            className={`icon text-2xl w-12 h-12 flex items-center justify-center rounded-lg border-2 border-[var(--primary)] relative group ml-2 p-0 transition-colors duration-200
+            ${open ? 'bg-[var(--primary)] text-white' : 'bg-white text-[var(--primary)]'}
+            focus:outline-black focus:outline-2 focus-visible:outline-black focus-visible:outline-2`}
+          aria-label="Toggle menu"
+          aria-haspopup="menu"
+          aria-expanded={open ? 'true' : 'false'}
+          aria-controls="mobile-menu-list"
+          onClick={() => setOpen((v) => !v)}
+          onKeyDown={e => {
+            if ((e.key === 'Enter' || e.key === ' ')) {
+              e.preventDefault();
+              setOpen((prev) => {
+                const willOpen = !prev;
+                if (willOpen) {
+                  setTimeout(() => {
+                    const firstMenu = document.querySelector('#mobile-menu-list [tabindex="0"]');
+                    if (firstMenu && 'focus' in firstMenu && typeof (firstMenu as HTMLElement).focus === 'function') {
+                      (firstMenu as HTMLElement).focus();
+                    }
+                  }, 0);
+                }
+                return willOpen;
+              });
+            }
+          }}
+          style={{ outlineOffset: 2 }}
+        >
+          {/* Hamburger icon with animated lines */}
+          <span className="sr-only">Menu</span>
+          <span
+            className={`hamburger-line absolute left-1/2 -translate-x-1/2 w-6 h-0.5 ${open ? 'bg-white' : 'bg-[var(--primary)]'} rounded transition-all duration-300 ease-in-out
 ${open ? 'rotate-45 top-5' : 'top-3'}`}
-            ></span>
-            <span
-              className={`hamburger-line absolute left-1/2 -translate-x-1/2 w-6 h-0.5 bg-[var(--primary)] rounded transition-all duration-300 ease-in-out
+          ></span>
+          <span
+            className={`hamburger-line absolute left-1/2 -translate-x-1/2 w-6 h-0.5 ${open ? 'bg-white opacity-0' : 'bg-[var(--primary)]'} rounded transition-all duration-300 ease-in-out
 ${open ? 'opacity-0' : 'top-5'}`}
-            ></span>
-            <span
-              className={`hamburger-line absolute left-1/2 -translate-x-1/2 w-6 h-0.5 bg-[var(--primary)] rounded transition-all duration-300 ease-in-out
+          ></span>
+          <span
+            className={`hamburger-line absolute left-1/2 -translate-x-1/2 w-6 h-0.5 ${open ? 'bg-white' : 'bg-[var(--primary)]'} rounded transition-all duration-300 ease-in-out
 ${open ? '-rotate-45 top-5' : 'top-7'}`}
-            ></span>
-          </button>
+          ></span>
+        </button>
         </div>
       </div>
       {/* Mobile menu */}
@@ -158,8 +160,9 @@ ${open ? '-rotate-45 top-5' : 'top-7'}`}
         className={`lg992:hidden transition-all duration-200 bg-white ${open ? "block" : "hidden"}`}
         role="menu"
         aria-label="Mobile menu"
+        tabIndex={-1}
       >
-        <ul className="flex flex-col items-start gap-4 py-4 w-full">
+        <ul className="flex flex-col items-start gap-4 py-4 w-full" role="none">
           {menuItems.map((item, idx) => (
             <li key={item.label} className="flex flex-row items-center gap-3 w-full px-6 py-1">
               <a
@@ -191,9 +194,11 @@ ${open ? '-rotate-45 top-5' : 'top-7'}`}
                     }, 0);
                   }
                 }}
+                className="flex items-center w-full rounded-lg transition-colors duration-150 group focus:outline-none focus-visible:outline-2 focus-visible:outline-white hover:bg-[var(--primary)] active:bg-[var(--primary)]"
+                style={{ color: 'inherit' }}
               >
-                <span className="icon text-2xl mr-2">{item.icon}</span>
-                <span className="text-sm">{item.label}</span>
+                <span className="icon text-2xl mr-2 group-hover:text-white group-active:text-white group-focus:text-white transition-colors duration-150">{item.icon}</span>
+                <span className="text-sm group-hover:text-white group-active:text-white group-focus:text-white transition-colors duration-150">{item.label}</span>
               </a>
             </li>
           ))}

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
 "use client";
 import React from 'react';
 import Image from 'next/image';
@@ -8,11 +6,11 @@ import { motion } from 'framer-motion';
 
 export default function AboutSection() {
   return (
-    <section id="about" className="w-full py-8 md:py-16 bg-white">
-      <div className="flex flex-col md:flex-row lg:flex-row items-center max-w-6xl mx-auto px-4 gap-8 tablet-stack about-responsive">
-        {/* Left: Text (on tablets, text on top, image below) */}
-        <div className="w-full md:w-1/2 flex flex-col items-start justify-center text-left px-4 sm:px-8 md:px-4 order-1 md:order-1 lg:order-1 about-text-responsive">
-          <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">About us</h3>
+    <section id="about" className="w-full py-8 md:py-16 bg-white scroll-mt-2">
+      <div className="flex flex-col lg:flex-row items-center max-w-7xl mx-auto px-4 gap-8 about-responsive">
+        {/* Left: Text (always left on large screens) */}
+        <div className="w-full lg:w-1/2 flex flex-col items-start justify-center text-left px-4 sm:px-8 md:px-4 order-1 about-text-responsive">
+          <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">About us</h3>
            <p className="mb-2 text-lg md:text-xl text-black-700">JDP Electrical has been providing Electrical Services throughout Sydney, North Shore Region and surrounding areas for over 30 years</p>
           <p className="mb-2 text-lg md:text-xl text-black-700">Brothers Dominic and Joseph Panetta have built a reputable electrical contracting business specialising in all electrical installations and repairs for Residential and Commercial sectors.</p>
           <p className="mb-2 text-lg md:text-xl text-black-700">We offer expert advice to customers, and assist them with design and implementation solutions providing them with lasting, efficient and practical lighting designs. We ensure all your electrical needs are met.</p>
@@ -21,21 +19,38 @@ export default function AboutSection() {
             <span className="block text-center text-lg sm:text-xl md:text-2xl font-semibold text-[var(--primary)]">&ldquo;Our approach is simple – we treat your home like our own.&rdquo;</span>
           </blockquote>
           <div className="flex justify-center w-full">
-            <button
-              type="button"
-              className="button flex items-center justify-center gap-2 font-semibold text-[14px] w-full max-w-[180px] rounded-lg h-[50px] px-6 cursor-pointer bg-gray-800 text-white hover:bg-gray-900 transition-colors focus-outline"
-              onClick={() => window.location.href = 'tel:02-9419-7947'}
-            >
-              <span className="flex items-center justify-center w-full gap-2">
-                <span className="m-0 p-0 font-semibold text-[16px] md:text-[18px] flex-1 text-center">Contact</span>
-                <PhoneInTalkIcon className="icon text-xl pb-[2px]" />
-              </span>
-            </button>
+           <button
+             type="button"
+             className="button flex items-center justify-center gap-2 font-semibold text-[14px] w-full max-w-[150px] rounded-lg h-[40px] cursor-pointer"
+             style={{ right: 0, padding: '0 10px' }}
+             onClick={() => { window.location.href = 'tel:02-9419-7947'; }}
+             aria-label="Call our office at 02 9419 7947"
+           >
+             <span className="flex items-center justify-center w-full gap-2">
+               <span className="m-0 p-0 font-semibold text-[14px] flex-1 text-center">02 9419 7947</span>
+               <PhoneInTalkIcon className="icon text-xl transition-colors" />
+             </span>
+           </button>
           </div>
         </div>
-        {/* Right: Image */}
-        <div className="w-full md:w-1/2 flex items-center justify-center order-2 md:order-2 lg:order-2 about-img-responsive">
-          <AnimatedAboutImage />
+        {/* Right: Image (fixed size on large screens) */}
+        <div className="w-full lg:w-1/2 flex items-center justify-center order-2 about-img-responsive">
+          <motion.div
+            initial={{ opacity: 0, x: 80 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.6 }}
+            transition={{ duration: 0.9, ease: 'easeOut' }}
+            className="flex items-center justify-center w-full"
+          >
+            <Image
+              src="/images/light3.jpg"
+              alt="Lighting image JDP Electrical Services"
+              width={724}
+              height={562}
+              className="rounded-lg shadow-lg object-cover w-full max-w-[724px] h-auto"
+              priority={false}
+            />
+          </motion.div>
         </div>
       </div>
 
@@ -103,43 +118,6 @@ export default function AboutSection() {
         }
       `}</style>
     </section>
-  );
-}
 
-// Animated image reveal for about section
-import type { ReactNode } from 'react';
-type AnimatedAboutImageProps = { children?: ReactNode };
-function AnimatedAboutImage({ children }: AnimatedAboutImageProps) {
-  const [isMobile, setIsMobile] = React.useState(false);
-  React.useEffect(() => {
-    function handleResize() {
-      setIsMobile(window.innerWidth < 640);
-    }
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // Final workaround: cast the motion.div to any to silence type error
-  return (
-    (
-      <motion.div
-        initial={isMobile ? { opacity: 0, y: 60 } : { opacity: 0, x: 80 }}
-        whileInView={{ opacity: 1, x: 0, y: 0 }}
-        viewport={{ once: true, amount: 0.6 }}
-        transition={{ duration: 0.9, ease: 'easeOut' }}
-      >
-        <Image
-          src="/images/IMG_1050.jpg"
-          alt="Joe and Dominic"
-          width={500}
-          height={400}
-          className="w-full max-w-md rounded-lg shadow-lg object-cover"
-          priority={false}
-        />
-        {children}
-      </motion.div>
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ) as any
   );
 }

@@ -2,7 +2,7 @@ import HomeHero from "../component/Home";
 import FlippingCards from "@/component/FlippingCards";
 import AboutSection from "../component/About";
 import ReviewsCarousel from "../component/ReviewsCarousel";
-import ContactForm from "../component/ContactForm";
+import RequestAQuote from "../component/ContactForm";
 import Footer from "../component/Footer";
 
 export default function Home() {
@@ -12,7 +12,7 @@ export default function Home() {
       <FlippingCards />
       <AboutSection />
       <ReviewsCarousel />
-      <ContactForm />
+      <RequestAQuote />
       <Footer />
     </>
   );

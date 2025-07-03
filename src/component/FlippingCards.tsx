@@ -1,12 +1,10 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
 "use client";
-import React from "react";
+import * as React from "react";
 import { motion } from "framer-motion";
-import "./flipping-cards-outline.css";
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import BusinessIcon from '@mui/icons-material/Business';
 import ElectricalServicesIcon from '@mui/icons-material/ElectricalServices';
+import "../styles/flipping-cards-outline.css";
 
 const cardData = [
   {
@@ -87,53 +85,77 @@ export default function FlippingCards() {
           // Flip if clicked or hovered (always allow both)
           const isFlipped = flippedIdx === idx;
           return (
-            <motion.div
-              key={card.title}
-              className={`group [perspective:1000px] w-[300px] h-[380px] relative mx-auto cursor-pointer focus:outline-none ${tabletCenter}`}
-              tabIndex={0}
-              role="button"
-              aria-pressed={isFlipped}
-              onClick={() => setFlippedIdx(flippedIdx === idx ? null : idx)}
-              onKeyDown={e => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  setFlippedIdx(flippedIdx === idx ? null : idx);
-                }
-              }}
-              onMouseEnter={() => setFlippedIdx(idx)}
-              onMouseLeave={() => flippedIdx === idx && setFlippedIdx(null)}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.7, delay: idx * 0.15, ease: 'easeOut' }}
-            >
-              <div
-                className={`relative w-full h-full duration-700 preserve-3d ${isFlipped ? '[transform:rotateY(180deg)]' : 'group-hover:[transform:rotateY(180deg)]'}`}
+            (
+              <motion.div
+                key={card.title}
+                className={`group [perspective:1000px] w-[300px] h-[380px] relative mx-auto cursor-pointer focus:outline-none ${tabletCenter}`}
+                tabIndex={0}
+                role="button"
+                aria-pressed={isFlipped}
+                onClick={() => setFlippedIdx(flippedIdx === idx ? null : idx)}
+                onKeyDown={(e: React.KeyboardEvent<HTMLDivElement>) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setFlippedIdx(flippedIdx === idx ? null : idx);
+                    // After flip, focus the back if opening
+                    setTimeout(() => {
+                      if (flippedIdx !== idx) {
+                        const back = document.querySelector(`[data-flipcard-back="${idx}"]`);
+                        if (back && 'focus' in back && typeof (back as HTMLElement).focus === 'function') {
+                          (back as HTMLElement).focus();
+                        }
+                      }
+                    }, 0);
+                  } else if (e.key === 'Tab' && isFlipped) {
+                    // If on card and flipped, Tab should move to next card, not into back
+                    setFlippedIdx(null);
+                  }
+                }}
+                onMouseEnter={() => setFlippedIdx(idx)}
+                onMouseLeave={() => { if (flippedIdx === idx) setFlippedIdx(null); }}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.7, delay: idx * 0.15, ease: 'easeOut' }}
               >
-                {/* Front */}
                 <div
-                  className="absolute w-full h-full bg-red rounded-2xl shadow-lg flex flex-col items-center justify-center text-white [backface-visibility:hidden] p-4 custom-red-shadow card-face-front focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-                  tabIndex={-1}
-                  data-front
+                  className={`relative w-full h-full duration-700 preserve-3d ${isFlipped ? '[transform:rotateY(180deg)]' : 'group-hover:[transform:rotateY(180deg)]'}`}
                 >
-                  <h3 className="text-xl font-bold uppercase mb-2 text-center">{card.title}</h3>
-                  <div className="flex-1 flex items-center justify-center">{card.icon}</div>
+                  {/* Front */}
+                  <div
+                    className="absolute w-full h-full bg-red rounded-2xl shadow-lg flex flex-col items-center justify-center text-white [backface-visibility:hidden] p-4 custom-red-shadow card-face-front focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                    tabIndex={-1}
+                    data-front
+                  >
+                    <h3 className="text-xl font-bold uppercase mb-2 text-center">{card.title}</h3>
+                    <div className="flex-1 flex items-center justify-center">{card.icon}</div>
+                  </div>
+                  {/* Back */}
+                  <div
+                    className="absolute w-full h-full bg-red rounded-2xl shadow-lg flex flex-col items-center justify-start text-white [backface-visibility:hidden] [transform:rotateY(180deg)] p-4 overflow-y-auto card-back custom-red-shadow card-face-back focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                    tabIndex={isFlipped ? 0 : -1}
+                    data-back
+                    data-flipcard-back={idx}
+                    onKeyDown={e => {
+                      if (e.key === 'Tab') {
+                        // Tab from back goes to next card
+                        setFlippedIdx(null);
+                      } else if (e.key === 'Escape') {
+                        // Escape closes back
+                        setFlippedIdx(null);
+                      }
+                    }}
+                  >
+                    <h3 className="text-lg font-bold uppercase mb-2 text-center w-full">{card.title}</h3>
+                    <ul className="list-disc list-inside text-left text-sm sm:text-[15px] space-y-1 w-full pl-2">
+                      {card.items.map((item, i) => (
+                        <li key={i}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-                {/* Back */}
-                <div
-                  className="absolute w-full h-full bg-red rounded-2xl shadow-lg flex flex-col items-center justify-start text-white [backface-visibility:hidden] [transform:rotateY(180deg)] p-4 overflow-y-auto card-back custom-red-shadow card-face-back focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-                  tabIndex={0}
-                  data-back
-                >
-                  <h3 className="text-lg font-bold uppercase mb-2 text-center w-full">{card.title}</h3>
-                  <ul className="list-disc list-inside text-left text-sm sm:text-[15px] space-y-1 w-full pl-2">
-                    {card.items.map((item, i) => (
-                      <li key={i}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            ) as unknown as React.ReactElement
           );
         })}
       </div>

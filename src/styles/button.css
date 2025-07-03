@@ -1,0 +1,30 @@
+.about-section-tel-link:focus,
+.about-section-tel-link:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+.button {
+  background: #fff;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  outline: none;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  outline-offset: -6px;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-black, #000);
+  outline-offset: -6px;
+}
+.button:hover {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.button .icon {
+  color: var(--primary);
+  transition: color 0.2s;
+}
+.button:hover .icon {
+  color: #fff;
+}
