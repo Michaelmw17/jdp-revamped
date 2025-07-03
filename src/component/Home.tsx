@@ -25,7 +25,7 @@ export default function HomeHero() {
       />
       <div className="relative z-10 flex flex-col items-center justify-end h-full w-full max-w-6xl mx-auto px-2 py-6 pt-30 md:pt-10">
         <div className="home-hero-box flex flex-col items-center justify-center" style={{ marginTop: '10vh' }}>
-          <h1 className="text-white text-3xl md:text-5xl lg:text-6xl font-bold mb-1 md:mb-3 drop-shadow-lg text-center">
+          <h1 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold mb-1 md:mb-3 drop-shadow-lg text-center">
             North Shore&apos;s Trusted Electricians
           </h1>
           <p className="text-white text-lg md:text-2xl font-medium mb-0 md:mb-2 drop-shadow-lg text-center" style={{marginTop: 0}}>
