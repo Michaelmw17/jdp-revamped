@@ -14,7 +14,7 @@ const menuItems = [
   { icon: <ElectricalServicesIcon />, label: "Services", anchor: "services" },
   { icon: <InfoOutlinedIcon />, label: "About", anchor: "about" },
   { icon: <StarBorderIcon />, label: "Reviews", anchor: "reviews" },
-  { icon: <SupportAgentIcon />, label: "Quote", anchor: "contact" },
+  { icon: <SupportAgentIcon />, label: "Contact", anchor: "contact" },
 ];
 
 const callButton = (
