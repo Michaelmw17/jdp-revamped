@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 export default function AboutSection() {
   return (
-    <section id="about" className="w-full py-8 md:py-16 bg-white scroll-mt-2">
+    <section id="about" className="w-full py-8 md:py-16 bg-white scroll-mt-16 md:scroll-mt-2">
       <div className="flex flex-col lg:flex-row items-center max-w-7xl mx-auto px-4 gap-8 about-responsive">
         {/* Left: Text (always left on large screens) */}
         <div className="w-full lg:w-1/2 flex flex-col items-start justify-center text-left px-4 sm:px-8 md:px-4 order-1 about-text-responsive">

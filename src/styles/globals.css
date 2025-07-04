@@ -38,6 +38,13 @@ html {
 .blue-link {
   color: #007bff;
   text-decoration: underline;
+  transition: color 0.18s, text-decoration-color 0.18s;
+}
+.blue-link:hover, .blue-link:focus-visible {
+  color: #0056b3;
+  text-decoration: none;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
 }
 
 
