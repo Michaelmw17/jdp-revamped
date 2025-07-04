@@ -23,10 +23,10 @@ export default function Footer() {
     <footer>
       <div className="w-full bg-[#f7f9fb] text-gray-900 py-8 mt-12">
         <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Request a Quote column remains as is */}
+        {/* Get in Touch column remains as is */}
         <div className="flex flex-col gap-2 items-start">
-          <h4 className="text-lg font-bold mb-2">Request a Quote</h4>
-          {/* Request a Quote */}
+          <h4 className="text-lg font-bold mb-2">Get in Touch</h4>
+          {/* Get in Touch */}
           <div className="mb-2">
             <h4 className="text-lg font-bold mb-1 capitalize">Tell us everything</h4>
             <div className="mb-2 text-black">Do you have any question regarding our services? <br />Feel free to reach out.</div>

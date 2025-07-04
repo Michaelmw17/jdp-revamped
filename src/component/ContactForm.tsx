@@ -16,7 +16,7 @@ type FormData = {
   message: string;
 };
 
-export default function RequestAQuote() {
+export default function GetInTouch() {
   const {
     register,
     handleSubmit,
@@ -58,9 +58,9 @@ export default function RequestAQuote() {
   return (
     <section className="w-full max-w-5xl mx-auto p-6 rounded-xl mt-8 scroll-mt-22" id="contact">
       <div className="flex flex-col md:flex-row gap-8">
-        {/* Left: Request a Quote Form */}
+        {/* Left: Get in Touch Form */}
         <div className="md:w-1/2 w-full">
-          <h3 className="text-3xl font-bold mb-4 text-center md:text-left">Request a Quote</h3>
+          <h3 className="text-3xl font-bold mb-4 text-center md:text-left">Get in Touch</h3>
           <form onSubmit={handleSubmit(onSubmit)} autoComplete="off" noValidate>
             <div className="mb-4">
               <input
@@ -172,7 +172,7 @@ export default function RequestAQuote() {
             </button>
           </form>
         </div>
-        {/* Right: Request a Quote Info and Map */}
+        {/* Right: Get in Touch Info and Map */}
         <div className="md:w-1/2 w-full flex flex-col items-center justify-center gap-6">
           <div className="text-center md:text-left">
             <div className="mb-2">
@@ -193,7 +193,7 @@ export default function RequestAQuote() {
   );
 }
 
-// Animated map reveal for Request a Quote section
+// Animated map reveal for Get in Touch section
 function AnimatedMapReveal() {
   const [isMobile, setIsMobile] = React.useState(false);
   React.useEffect(() => {

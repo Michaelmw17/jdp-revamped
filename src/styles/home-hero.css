@@ -28,9 +28,8 @@
 }
 @media (min-width: 768px) {
   .home-hero-img-bg {
-    object-position: center 45%; /* Default for sm and up */
+    object-position: center 45%; 
     transform: none;
-    transform: translateY(10%);
   }
 }
 @media (min-width: 1024px) {

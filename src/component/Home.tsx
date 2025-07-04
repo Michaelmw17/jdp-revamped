@@ -23,7 +23,7 @@ export default function HomeHero() {
         priority
         sizes="100vw"
       />
-      <div className="relative z-10 flex flex-col items-center justify-end h-full w-full max-w-6xl mx-auto px-2 py-6 pt-80 md:pt-10 md:pt-10">
+      <div className="relative z-10 flex flex-col items-center justify-end h-full w-full max-w-6xl mx-auto px-2 py-6 pt-80 md:pt-0">
         <div className="home-hero-box flex flex-col items-center justify-center">
           <h1 className="text-white text-2xl md:text-4xl lg:text-5xl font-bold mb-1 md:mb-3 drop-shadow-lg text-center">
             North Shore&apos;s Trusted Electricians
@@ -50,7 +50,7 @@ export default function HomeHero() {
               tabIndex={0}
             >
               <span className="flex items-center justify-center gap-1 w-full">
-                <span className="m-0 p-0 font-semibold text-center whitespace-nowrap">Request a Quote</span>
+                <span className="m-0 p-0 font-semibold text-center whitespace-nowrap">Get in Touch</span>
                 <SupportAgentIcon className="icon text-base md:text-xl transition-colors pb-[2px]" />
               </span>
             </a>
