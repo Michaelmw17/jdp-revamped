@@ -188,7 +188,7 @@ export default function ReviewsCarousel() {
             <div
               ref={reviewTextRef}
               className={`w-full text-lg md:text-xl text-white text-center leading-relaxed transition-all duration-300 px-10 
-                ${!expanded ? 'line-clamp-3' : ''} md:line-clamp-none`}
+                ${!expanded ? 'line-clamp-3' : ''} md:line-clamp-none md:pt-5`}
             >
               <span>“{review.text}”</span>
             </div>

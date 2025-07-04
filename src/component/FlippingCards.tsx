@@ -1,5 +1,6 @@
 "use client";
 import * as React from "react";
+import FlipCameraAndroidIcon from '@mui/icons-material/FlipCameraAndroid';
 import { motion } from "framer-motion";
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import BusinessIcon from '@mui/icons-material/Business';
@@ -59,6 +60,8 @@ export default function FlippingCards() {
   // For mobile click-to-flip and debug force flip
   const [flippedIdx, setFlippedIdx] = React.useState<number | null>(null);
   const [screen, setScreen] = React.useState<'mobile' | 'tablet' | 'desktop'>('desktop');
+  // Track which cards have been auto-flipped (for mobile: all, for desktop: only first)
+  const [autoFlipped, setAutoFlipped] = React.useState<{[key:number]: boolean}>({});
 
   React.useEffect(() => {
     function handleResize() {
@@ -84,6 +87,7 @@ export default function FlippingCards() {
           const tabletCenter = screen === 'tablet' && isThirdCard ? 'sm:col-span-2 sm:col-start-1 sm:justify-self-center' : '';
           // Flip if clicked or hovered (always allow both)
           const isFlipped = flippedIdx === idx;
+          // ...existing code...
           return (
             (
               <motion.div
@@ -92,7 +96,15 @@ export default function FlippingCards() {
                 tabIndex={0}
                 role="button"
                 aria-pressed={isFlipped}
-                onClick={() => setFlippedIdx(flippedIdx === idx ? null : idx)}
+                onClick={() => {
+                  setFlippedIdx(flippedIdx === idx ? null : idx);
+                }}
+                onTouchEnd={e => {
+                  if (screen === 'mobile') {
+                    e.preventDefault();
+                    setFlippedIdx(flippedIdx === idx ? null : idx);
+                  }
+                }}
                 onKeyDown={(e: React.KeyboardEvent<HTMLDivElement>) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
@@ -111,10 +123,29 @@ export default function FlippingCards() {
                     setFlippedIdx(null);
                   }
                 }}
-                onMouseEnter={() => setFlippedIdx(idx)}
-                onMouseLeave={() => { if (flippedIdx === idx) setFlippedIdx(null); }}
+                onMouseEnter={() => { if (screen !== 'mobile') setFlippedIdx(idx); }}
+                onMouseLeave={() => { if (screen !== 'mobile' && flippedIdx === idx) setFlippedIdx(null); }}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                onViewportEnter={() => {
+                  if (screen === 'mobile') {
+                    if (!autoFlipped[idx] && flippedIdx !== idx) {
+                      setAutoFlipped(prev => ({ ...prev, [idx]: true }));
+                      setFlippedIdx(idx);
+                      setTimeout(() => {
+                        setFlippedIdx(current => (current === idx ? null : current));
+                      }, 1200);
+                    }
+                  } else {
+                    if (idx === 0 && !autoFlipped[0] && flippedIdx !== 0) {
+                      setAutoFlipped(prev => ({ ...prev, 0: true }));
+                      setFlippedIdx(0);
+                      setTimeout(() => {
+                        setFlippedIdx(current => (current === 0 ? null : current));
+                      }, 1200);
+                    }
+                  }
+                }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.7, delay: idx * 0.15, ease: 'easeOut' }}
               >
@@ -129,6 +160,10 @@ export default function FlippingCards() {
                   >
                     <h3 className="text-xl font-bold uppercase mb-2 text-center">{card.title}</h3>
                     <div className="flex-1 flex items-center justify-center">{card.icon}</div>
+                    <div className="flex flex-col items-center mt-2 opacity-80">
+                      <FlipCameraAndroidIcon style={{ fontSize: 32, marginBottom: 2 }} aria-label="Flip card" />
+                      <span className="text-xs sm:text-sm mt-1">Hover or tap to flip</span>
+                    </div>
                   </div>
                   {/* Back */}
                   <div

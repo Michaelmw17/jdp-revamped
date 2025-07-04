@@ -34,6 +34,19 @@ const callButton = (
 
 export default function Hamburger() {
   const [open, setOpen] = useState(false);
+  // Close menu when clicking outside on mobile
+  React.useEffect(() => {
+    if (!open) return;
+    function handleClickOutside(e: MouseEvent) {
+      const menu = document.getElementById('mobile-menu-list');
+      const hamburger = document.querySelector('.my-mobile-class button[aria-label="Toggle menu"]');
+      if (menu && !menu.contains(e.target as Node) && hamburger && !hamburger.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [open]);
 
   // Close mobile menu if screen is resized above mobile breakpoint
   React.useEffect(() => {

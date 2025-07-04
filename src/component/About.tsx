@@ -45,9 +45,9 @@ export default function AboutSection() {
             <Image
               src="/images/light3.jpg"
               alt="Lighting image JDP Electrical Services"
-              width={724}
-              height={562}
-              className="rounded-lg shadow-lg object-cover w-full max-w-[724px] h-auto"
+              width={500}
+              height={375}
+              className="rounded-lg shadow-lg object-cover w-full max-w-[500px] h-auto"
               priority={false}
             />
           </motion.div>

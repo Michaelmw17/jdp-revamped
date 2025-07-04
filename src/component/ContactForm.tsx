@@ -86,14 +86,22 @@ export default function RequestAQuote() {
             </div>
             <div className="mb-4">
               <input
-                {...register("number", { required: true })}
-                type="text"
+                {...register("number", {
+                  required: true,
+                  pattern: { value: /^\d+$/, message: "Only numbers allowed" },
+                  minLength: { value: 8, message: "Must be at least 8 digits" },
+                  maxLength: { value: 15, message: "Must be at most 15 digits" }
+                })}
+                type="tel"
+                inputMode="numeric"
+                pattern="[0-9]*"
                 id="number"
                 placeholder="Phone Number *"
                 className="w-full border rounded px-3 py-2"
                 disabled={disabled}
+                autoComplete="tel"
               />
-              {errors.number && <span className="text-red-600 text-sm">Phone number is required</span>}
+              {errors.number && <span className="text-red-600 text-sm">{errors.number.message || "Phone number is required and must contain only digits"}</span>}
             </div>
             <div className="mb-4">
               <input
@@ -143,13 +151,17 @@ export default function RequestAQuote() {
             </div>
             <div className="mb-4">
               <textarea
-                {...register("message", { required: true })}
+                {...register("message", {
+                  required: true,
+                  minLength: { value: 10, message: "Message must be at least 10 characters" },
+                  maxLength: { value: 500, message: "Message must be at most 500 characters" }
+                })}
                 rows={3}
                 placeholder="Message *"
                 className="w-full border rounded px-3 py-2"
                 disabled={disabled}
               />
-              {errors.message && <span className="text-red-600 text-sm">Message is required</span>}
+              {errors.message && <span className="text-red-600 text-sm">{errors.message.message || "Message is required"}</span>}
             </div>
             <button
               type="submit"

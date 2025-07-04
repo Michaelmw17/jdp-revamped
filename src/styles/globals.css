@@ -59,22 +59,23 @@ button:focus-visible {
 }
 
 /* Back to Top Button Styles */
+/* Improved Back to Top Button Styles for visibility */
 .back-to-top-btn {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
+  bottom: 1.5rem;
+  right: 1.25rem;
   width: 48px;
   height: 48px;
-  background: #d11d32;
+  background: #98202e;
   border: none;
   border-radius: 50%;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s, transform 0.2s;
+  transition: opacity 0.3s, transform 0.2s, background 0.2s;
   z-index: 1000;
   cursor: pointer;
 }
@@ -84,7 +85,7 @@ button:focus-visible {
   transform: translateY(0);
 }
 .back-to-top-btn:hover {
-  background: #b71c2b;
+  background: rgba(0,0,0,0.85);
   transform: scale(1.08);
 }
 .back-to-top-btn svg {
