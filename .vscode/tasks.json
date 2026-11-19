@@ -1,0 +1,56 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "npm: install",
+      "type": "shell",
+      "command": "if (Test-Path Z:) { net use Z: /delete /y }; net use Z: '${workspaceFolder}'; Set-Location Z:; npm install; Set-Location ${env:USERPROFILE}; net use Z: /delete /y",
+      "options": {
+        "shell": {
+          "executable": "powershell.exe"
+        }
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "npm: dev",
+      "type": "shell",
+      "command": "if (Test-Path Z:) { net use Z: /delete /y }; net use Z: '${workspaceFolder}'; Set-Location Z:; npm run dev",
+      "options": {
+        "shell": {
+          "executable": "powershell.exe"
+        }
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "custom",
+        "pattern": {
+          "regexp": "^$"
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".*",
+          "endsPattern": "(Local:|ready)"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "focus": true
+      }
+    },
+    {
+      "label": "Install and Run Dev",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "npm: install",
+        "npm: dev"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}
